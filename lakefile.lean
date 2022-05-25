@@ -3,6 +3,8 @@ open Lake DSL
 
 package «lean4-metaprogramming-book» {
   defaultFacet := PackageFacet.oleans
+  -- add configuration options here
+  libRoots := #[`lean]
 }
 
 def runCmd (cmd : String) (args : Array String) : ScriptM Bool := do
@@ -17,7 +19,6 @@ def runCmd (cmd : String) (args : Array String) : ScriptM Bool := do
 
 script build do
   let _ ← runCmd "rm" #["-rf", "md"]
-
   if ← runCmd "python" #["-m", "lean2md", "lean", "md"] then return 1
   if ← runCmd "python" #["-m", "lean2md", "lean/main", "md/main"] then return 1
   if ← runCmd "python" #["-m", "lean2md", "lean/extra", "md/extra"] then return 1
